@@ -1,8 +1,8 @@
 package workItems
 
 import (
-	"encoding/json"
 	"fmt"
+	"strings"
 
 	"github.com/aacebo/ms-cli/ado"
 	"github.com/aacebo/ms-cli/cli"
@@ -17,11 +17,21 @@ func search(client *ado.Client) func(cli.Args) error {
 		}
 
 		for _, workItem := range workItems {
-			b, _ := json.Marshal(workItem.Fields)
-			fmt.Println(string(b))
-		}
+			id := (*workItem.Fields)["system.id"]
+			title := (*workItem.Fields)["system.title"]
+			t := (*workItem.Fields)["system.workitemtype"]
+			state := (*workItem.Fields)["system.state"]
+			tags := strings.Split((*workItem.Fields)["system.tags"], "; ")
 
-		fmt.Println(len(workItems))
+			fmt.Printf(
+				"- [%s (%s)]:\n\t- Type => %s\n\t- State => %s\n\t- Tags => %s\n\n",
+				title,
+				id,
+				t,
+				state,
+				strings.Join(tags, ", "),
+			)
+		}
 
 		return nil
 	}
