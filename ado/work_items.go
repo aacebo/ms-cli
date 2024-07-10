@@ -50,10 +50,9 @@ func (self WorkItemsClient) Search(text string) ([]search.WorkItemResult, error)
 				Skip:       &skip,
 				SearchText: &text,
 				Filters: &map[string][]string{
-					"System.TeamProject":  {self.project},
-					"System.AreaPath":     {self.project},
-					"System.WorkItemType": {"Bug", "User Story", "Feature", "Task"},
-					"System.State":        {"New", "Active", "Closed"},
+					"System.TeamProject": {self.project},
+					"System.AreaPath":    {self.project},
+					"System.State":       {"Proposed", "New", "Active"},
 				},
 			},
 		})
