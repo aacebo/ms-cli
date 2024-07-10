@@ -11,7 +11,7 @@ type Command struct {
 	Description string
 	Params      Params
 	Commands    []Command
-	Handler     func(...string) error
+	Handler     func(args Args) error
 }
 
 func NewCommand(name string) Command {
@@ -27,7 +27,7 @@ func (self Command) WithDescription(description string) Command {
 	return self
 }
 
-func (self Command) WithParams(params map[string]string) Command {
+func (self Command) WithParams(params Params) Command {
 	self.Params = params
 	return self
 }
@@ -37,7 +37,7 @@ func (self Command) WithCommand(cmd Command) Command {
 	return self
 }
 
-func (self Command) WithHandler(handler func(...string) error) Command {
+func (self Command) WithHandler(handler func(args Args) error) Command {
 	self.Handler = handler
 	return self
 }
@@ -59,21 +59,19 @@ func (self Command) Run(args ...string) error {
 		}
 	}
 
-	for _, arg := range args {
-		if _, ok := self.Params[arg]; !ok {
-			return errors.New(fmt.Sprintf(
-				"argument `%s` not found for command `%s`",
-				arg,
-				self.Name,
-			))
-		}
+	errs := []error{}
+	parsedArgs, err := self.Params.Validate(args...)
+
+	if err != nil {
+		errs = append(errs, err)
+		return errors.Join(errs...)
 	}
 
 	if self.Handler != nil {
-		return self.Handler(args...)
+		return self.Handler(parsedArgs)
 	}
 
-	return nil
+	return errors.Join(errs...)
 }
 
 func (self Command) help() {
@@ -81,14 +79,24 @@ func (self Command) help() {
 		fmt.Println(self.Description)
 	}
 
-	if len(self.Commands) == 0 {
-		return
+	if len(self.Params) > 0 {
+		fmt.Println("\nParameters:")
+
+		for key, param := range self.Params {
+			fmt.Printf(
+				"\t%s: %s\n",
+				key,
+				param.GetDescription(),
+			)
+		}
 	}
 
-	fmt.Println("\nCommands:")
+	if len(self.Commands) > 0 {
+		fmt.Println("\nSub Commands:")
 
-	for _, cmd := range self.Commands {
-		fmt.Printf("- %s: %s\n", cmd.Name, cmd.Description)
+		for _, cmd := range self.Commands {
+			fmt.Printf("- %s: %s\n", cmd.Name, cmd.Description)
+		}
 	}
 
 	return

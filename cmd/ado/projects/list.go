@@ -7,8 +7,8 @@ import (
 	"github.com/aacebo/ms-cli/cli"
 )
 
-func list(client *ado.Client) func(...string) error {
-	return func(args ...string) error {
+func list(client *ado.Client) func(cli.Args) error {
+	return func(args cli.Args) error {
 		projects, err := client.Projects().List()
 
 		if err != nil {
