@@ -1,33 +1,38 @@
 package ado
 
 import (
-	"context"
-
 	"github.com/microsoft/azure-devops-go-api/azuredevops/v7"
-	"github.com/microsoft/azure-devops-go-api/azuredevops/v7/core"
 )
 
 type Client struct {
-	client   core.Client
-	projects ProjectsClient
-}
-
-func (self Client) Projects() ProjectsClient {
-	return self.projects
+	projects  *ProjectsClient
+	workItems *WorkItemsClient
 }
 
 func New(url string, accessToken string) (*Client, error) {
-	connection := azuredevops.NewPatConnection(url, accessToken)
-	client, err := core.NewClient(context.Background(), connection)
+	conn := azuredevops.NewPatConnection(url, accessToken)
+	projects, err := NewProjectsClient(conn)
+
+	if err != nil {
+		return nil, err
+	}
+
+	workItems, err := NewWorkItemsClient(conn)
 
 	if err != nil {
 		return nil, err
 	}
 
 	return &Client{
-		client: client,
-		projects: ProjectsClient{
-			client: client,
-		},
+		projects:  projects,
+		workItems: workItems,
 	}, nil
+}
+
+func (self Client) Projects() ProjectsClient {
+	return *self.projects
+}
+
+func (self Client) WorkItems() WorkItemsClient {
+	return *self.workItems
 }
