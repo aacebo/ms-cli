@@ -1,137 +1,136 @@
 package cli
 
-type _Text string
+type Text string
 
-func Text() _Text {
-	return ""
+func (self Text) String() string {
+	return string(self)
 }
 
-func (self _Text) Bold(text string) _Text {
-	self += _Text(ANSI_CODE_BOLD + text + ANSI_CODE_BOLD_RESET)
+func (self Text) Bold() Text {
+	return Text(ANSI_CODE_BOLD + string(self) + ANSI_CODE_BOLD_RESET)
+}
+
+func (self Text) Dim() Text {
+	return Text(ANSI_CODE_DIM + string(self) + ANSI_CODE_DIM_RESET)
+}
+
+func (self Text) Italic() Text {
+	return Text(ANSI_CODE_ITALIC + string(self) + ANSI_CODE_ITALIC_RESET)
+}
+
+func (self Text) Underline() Text {
+	return Text(ANSI_CODE_UNDERLINE + string(self) + ANSI_CODE_UNDERLINE_RESET)
+}
+
+func (self Text) Blink() Text {
+	return Text(ANSI_CODE_BLINK + string(self) + ANSI_CODE_BLINK_RESET)
+}
+
+func (self Text) Reverse() Text {
+	return Text(ANSI_CODE_REVERSE + string(self) + ANSI_CODE_REVERSE_RESET)
+}
+
+func (self Text) Hide() Text {
+	return Text(ANSI_CODE_HIDE + string(self) + ANSI_CODE_HIDE_RESET)
+}
+
+func (self Text) Strike() Text {
+	return Text(ANSI_CODE_STRIKE + string(self) + ANSI_CODE_STRIKE_RESET)
+}
+
+func (self Text) BlackForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_BLACK + string(self) + ANSI_CODE_FOREGROUND_RESET)
+}
+
+func (self Text) BlackBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_BLACK + string(self) + ANSI_CODE_BACKGROUND_RESET)
+}
+
+func (self Text) RedForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_RED + string(self) + ANSI_CODE_FOREGROUND_RESET)
+}
+
+func (self Text) RedBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_RED + string(self) + ANSI_CODE_BACKGROUND_RESET)
+}
+
+func (self Text) GreenForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_GREEN + string(self) + ANSI_CODE_FOREGROUND_RESET)
+}
+
+func (self Text) GreenBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_GREEN + string(self) + ANSI_CODE_BACKGROUND_RESET)
+}
+
+func (self Text) YellowForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_YELLOW + string(self) + ANSI_CODE_FOREGROUND_RESET)
+}
+
+func (self Text) YellowBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_YELLOW + string(self) + ANSI_CODE_BACKGROUND_RESET)
+}
+
+func (self Text) BlueForeground(text string) Text {
+	self += Text(ANSI_CODE_FOREGROUND_BLUE + text + ANSI_CODE_FOREGROUND_RESET)
 	return self
 }
 
-func (self _Text) Dim(text string) _Text {
-	self += _Text(ANSI_CODE_DIM + text + ANSI_CODE_DIM_RESET)
-	return self
+func (self Text) BlueBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_BLUE + string(self) + ANSI_CODE_BACKGROUND_RESET)
 }
 
-func (self _Text) Italic(text string) _Text {
-	self += _Text(ANSI_CODE_ITALIC + text + ANSI_CODE_ITALIC_RESET)
-	return self
+func (self Text) MagentaForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_MAGENTA + string(self) + ANSI_CODE_FOREGROUND_RESET)
 }
 
-func (self _Text) Underline(text string) _Text {
-	self += _Text(ANSI_CODE_UNDERLINE + text + ANSI_CODE_UNDERLINE_RESET)
-	return self
+func (self Text) MagentaBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_MAGENTA + string(self) + ANSI_CODE_BACKGROUND_RESET)
 }
 
-func (self _Text) Blink(text string) _Text {
-	self += _Text(ANSI_CODE_BLINK + text + ANSI_CODE_BLINK_RESET)
-	return self
+func (self Text) CyanForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_CYAN + string(self) + ANSI_CODE_FOREGROUND_RESET)
 }
 
-func (self _Text) Reverse(text string) _Text {
-	self += _Text(ANSI_CODE_REVERSE + text + ANSI_CODE_REVERSE_RESET)
-	return self
+func (self Text) CyanBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_CYAN + string(self) + ANSI_CODE_BACKGROUND_RESET)
 }
 
-func (self _Text) Hide(text string) _Text {
-	self += _Text(ANSI_CODE_HIDE + text + ANSI_CODE_HIDE_RESET)
-	return self
+func (self Text) WhiteForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_WHITE + string(self) + ANSI_CODE_FOREGROUND_RESET)
 }
 
-func (self _Text) Strike(text string) _Text {
-	self += _Text(ANSI_CODE_STRIKE + text + ANSI_CODE_STRIKE_RESET)
-	return self
+func (self Text) WhiteBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_WHITE + string(self) + ANSI_CODE_BACKGROUND_RESET)
 }
 
-func (self _Text) BlackForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_BLACK + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
+func (self Text) DefaultForeground() Text {
+	return Text(ANSI_CODE_FOREGROUND_DEFAULT + string(self) + ANSI_CODE_FOREGROUND_RESET)
 }
 
-func (self _Text) BlackBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_BLACK + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
+func (self Text) DefaultBackground() Text {
+	return Text(ANSI_CODE_BACKGROUND_DEFAULT + string(self) + ANSI_CODE_BACKGROUND_RESET)
 }
 
-func (self _Text) RedForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_RED + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
+func (self Text) EraseScreenEnd() Text {
+	return Text(string(self) + ANSI_CODE_ERASE_SCREEN_END)
 }
 
-func (self _Text) RedBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_RED + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
+func (self Text) EraseScreenStart() Text {
+	return Text(string(self) + ANSI_CODE_ERASE_SCREEN_END)
 }
 
-func (self _Text) GreenForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_GREEN + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
+func (self Text) EraseScreen() Text {
+	return Text(string(self) + ANSI_CODE_ERASE_SCREEN)
 }
 
-func (self _Text) GreenBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_GREEN + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
+func (self Text) EraseLineEnd() Text {
+	return Text(string(self) + ANSI_CODE_ERASE_LINE_END)
 }
 
-func (self _Text) YellowForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_YELLOW + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
+func (self Text) EraseLineStart() Text {
+	return Text(string(self) + ANSI_CODE_ERASE_LINE_END)
 }
 
-func (self _Text) YellowBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_YELLOW + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
-}
-
-func (self _Text) BlueForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_BLUE + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
-}
-
-func (self _Text) BlueBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_BLUE + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
-}
-
-func (self _Text) MagentaForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_MAGENTA + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
-}
-
-func (self _Text) MagentaBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_MAGENTA + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
-}
-
-func (self _Text) CyanForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_CYAN + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
-}
-
-func (self _Text) CyanBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_CYAN + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
-}
-
-func (self _Text) WhiteForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_WHITE + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
-}
-
-func (self _Text) WhiteBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_WHITE + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
-}
-
-func (self _Text) DefaultForeground(text string) _Text {
-	self += _Text(ANSI_CODE_FOREGROUND_DEFAULT + text + ANSI_CODE_FOREGROUND_RESET)
-	return self
-}
-
-func (self _Text) DefaultBackground(text string) _Text {
-	self += _Text(ANSI_CODE_BACKGROUND_DEFAULT + text + ANSI_CODE_BACKGROUND_RESET)
-	return self
+func (self Text) EraseLine() Text {
+	return Text(string(self) + ANSI_CODE_ERASE_LINE)
 }

@@ -40,4 +40,11 @@ const (
 	ANSI_CODE_BACKGROUND_WHITE   string = "\x1b[47m"
 	ANSI_CODE_FOREGROUND_DEFAULT string = "\x1b[39m"
 	ANSI_CODE_BACKGROUND_DEFAULT string = "\x1b[49m"
+
+	ANSI_CODE_ERASE_SCREEN_END   string = "\x1b[0Jm"
+	ANSI_CODE_ERASE_SCREEN_START string = "\x1b[1Jm"
+	ANSI_CODE_ERASE_SCREEN       string = "\x1b[2Jm"
+	ANSI_CODE_ERASE_LINE_END     string = "\x1b[0K"
+	ANSI_CODE_ERASE_LINE_START   string = "\x1b[1K"
+	ANSI_CODE_ERASE_LINE         string = "\x1b[2K"
 )

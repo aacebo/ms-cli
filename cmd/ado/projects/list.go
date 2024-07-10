@@ -17,10 +17,10 @@ func list(client *ado.Client) func(...string) error {
 
 		for _, project := range projects {
 			fmt.Printf(
-				"[%s (%s)] => %s\n",
-				cli.Text().RedForeground(*project.Name),
+				cli.Text("[%s (%s)]").CyanForeground().String()+" => %s\n",
+				cli.Text(*project.Name).Bold(),
 				project.Id.String(),
-				*project.Url,
+				cli.Text(*project.Url).Underline(),
 			)
 		}
 
