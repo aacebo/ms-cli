@@ -1,7 +1,6 @@
 package main
 
 import (
-	"fmt"
 	"log"
 	"os"
 
@@ -12,23 +11,31 @@ import (
 )
 
 func main() {
-	adoClient, err := ado.New(
-		os.Getenv("AZURE_DEVOPS_URL"),
-		os.Getenv("AZURE_DEVOPS_TOKEN"),
+	var adoClient *ado.Client
+	adoUrl := os.Getenv("AZURE_DEVOPS_URL")
+	adoToken := os.Getenv("AZURE_DEVOPS_TOKEN")
+	cmd := cli.NewCommand("ag").
+		WithDescription("MS CLI (Unoffcial)").
+		WithCommand(version.New())
+
+	if adoUrl != "" {
+		v, err := ado.New(adoUrl, adoToken)
+
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		adoClient = v
+	}
+
+	cmd = cmd.WithCommand(
+		_ado.New(adoClient).
+			WithDisabled(adoClient == nil),
 	)
 
-	if err != nil {
+	if err := cmd.Run(os.Args[1:]...); err != nil {
 		log.Fatal(err)
 	}
 
-	err = cli.NewCommand("ag").
-		WithDescription("MS CLI (Unoffcial)").
-		WithCommand(version.New()).
-		WithCommand(_ado.New(adoClient)).
-		Run(os.Args[1:]...)
-
-	if err != nil {
-		fmt.Println(err.Error())
-		os.Exit(1)
-	}
+	os.Exit(0)
 }

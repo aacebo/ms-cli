@@ -1,17 +1,19 @@
 package cli
 
 import (
+	"encoding/json"
 	"errors"
 	"fmt"
 	"slices"
 )
 
 type Command struct {
-	Name        string
-	Description string
-	Params      Params
-	Commands    []Command
-	Handler     func(args Args) error
+	Name        string                `json:"name"`
+	Description string                `json:"description"`
+	Params      Params                `json:"params"`
+	Disabled    bool                  `json:"disabled"`
+	Commands    []Command             `json:"commands"`
+	Handler     func(args Args) error `json:"-"`
 }
 
 func NewCommand(name string) Command {
@@ -32,6 +34,11 @@ func (self Command) WithParams(params Params) Command {
 	return self
 }
 
+func (self Command) WithDisabled(disabled bool) Command {
+	self.Disabled = disabled
+	return self
+}
+
 func (self Command) WithCommand(cmd Command) Command {
 	self.Commands = append(self.Commands, cmd)
 	return self
@@ -43,6 +50,10 @@ func (self Command) WithHandler(handler func(args Args) error) Command {
 }
 
 func (self Command) Run(args ...string) error {
+	if self.Disabled {
+		return nil
+	}
+
 	if len(args) > 0 {
 		if args[0] == "help" {
 			self.help()
@@ -74,6 +85,11 @@ func (self Command) Run(args ...string) error {
 	return errors.Join(errs...)
 }
 
+func (self Command) String() string {
+	b, _ := json.Marshal(self)
+	return string(b)
+}
+
 func (self Command) help() {
 	if self.Description != "" {
 		fmt.Println(self.Description)
@@ -95,7 +111,13 @@ func (self Command) help() {
 		fmt.Println("\nSub Commands:")
 
 		for _, cmd := range self.Commands {
-			fmt.Printf("- %s: %s\n", cmd.Name, cmd.Description)
+			text := Text(cmd.Name).Bold() + ": " + Text(cmd.Description)
+
+			if cmd.Disabled {
+				text = text.Strike()
+			}
+
+			fmt.Println("- " + text.String())
 		}
 	}
 
