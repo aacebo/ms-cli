@@ -12,7 +12,9 @@ func New(client *ado.Client) cli.Command {
 			cli.NewCommand("search").
 				WithDescription("search project work items").
 				WithParams(cli.Params{
-					"project": cli.String().Required(),
+					"project": cli.String().
+						Description("project id/name").
+						Required(),
 				}).
 				WithHandler(search(client)),
 		)
