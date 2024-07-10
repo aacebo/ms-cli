@@ -33,6 +33,7 @@ func (self Client) Projects() ProjectsClient {
 	return *self.projects
 }
 
-func (self Client) WorkItems() WorkItemsClient {
+func (self Client) WorkItems(project string) WorkItemsClient {
+	self.workItems.project = project
 	return *self.workItems
 }
