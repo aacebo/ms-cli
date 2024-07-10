@@ -51,7 +51,7 @@ func (self Command) WithHandler(handler func(args Args) error) Command {
 
 func (self Command) Run(args ...string) error {
 	if self.Disabled {
-		return nil
+		return errors.New("disabled")
 	}
 
 	if len(args) > 0 {
