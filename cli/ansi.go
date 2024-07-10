@@ -1,7 +1,8 @@
 package cli
 
 const (
-	ANSI_CODE_RESET           string = "\x1b[0m"
+	ANSI_CODE_RESET string = "\x1b[0m"
+
 	ANSI_CODE_BOLD            string = "\x1b[1m"
 	ANSI_CODE_BOLD_RESET      string = "\x1b[22m"
 	ANSI_CODE_DIM             string = "\x1b[2m"
@@ -18,4 +19,25 @@ const (
 	ANSI_CODE_HIDE_RESET      string = "\x1b[28m"
 	ANSI_CODE_STRIKE          string = "\x1b[9m"
 	ANSI_CODE_STRIKE_RESET    string = "\x1b[29m"
+
+	ANSI_CODE_FOREGROUND_RESET   string = "\x1b[0m"
+	ANSI_CODE_BACKGROUND_RESET   string = "\x1b[0m"
+	ANSI_CODE_FOREGROUND_BLACK   string = "\x1b[30m"
+	ANSI_CODE_BACKGROUND_BLACK   string = "\x1b[40m"
+	ANSI_CODE_FOREGROUND_RED     string = "\x1b[31m"
+	ANSI_CODE_BACKGROUND_RED     string = "\x1b[41m"
+	ANSI_CODE_FOREGROUND_GREEN   string = "\x1b[32m"
+	ANSI_CODE_BACKGROUND_GREEN   string = "\x1b[42m"
+	ANSI_CODE_FOREGROUND_YELLOW  string = "\x1b[33m"
+	ANSI_CODE_BACKGROUND_YELLOW  string = "\x1b[43m"
+	ANSI_CODE_FOREGROUND_BLUE    string = "\x1b[34m"
+	ANSI_CODE_BACKGROUND_BLUE    string = "\x1b[44m"
+	ANSI_CODE_FOREGROUND_MAGENTA string = "\x1b[35m"
+	ANSI_CODE_BACKGROUND_MAGENTA string = "\x1b[45m"
+	ANSI_CODE_FOREGROUND_CYAN    string = "\x1b[36m"
+	ANSI_CODE_BACKGROUND_CYAN    string = "\x1b[46m"
+	ANSI_CODE_FOREGROUND_WHITE   string = "\x1b[37m"
+	ANSI_CODE_BACKGROUND_WHITE   string = "\x1b[47m"
+	ANSI_CODE_FOREGROUND_DEFAULT string = "\x1b[39m"
+	ANSI_CODE_BACKGROUND_DEFAULT string = "\x1b[49m"
 )

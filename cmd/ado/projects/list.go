@@ -18,7 +18,7 @@ func list(client *ado.Client) func(...string) error {
 		for _, project := range projects {
 			fmt.Printf(
 				"[%s (%s)] => %s\n",
-				cli.Text().Bold(*project.Name),
+				cli.Text().RedForeground(*project.Name),
 				project.Id.String(),
 				*project.Url,
 			)
