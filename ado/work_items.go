@@ -2,11 +2,20 @@ package ado
 
 import (
 	"context"
+	"strings"
 
 	"github.com/microsoft/azure-devops-go-api/azuredevops/v7"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/v7/search"
+	"github.com/microsoft/azure-devops-go-api/azuredevops/v7/webapi"
 	"github.com/microsoft/azure-devops-go-api/azuredevops/v7/workitemtracking"
 )
+
+type CreateWorkItemArgs struct {
+	Title       string
+	Type        string
+	Description string
+	Tags        []string
+}
 
 type WorkItemsClient struct {
 	project   string
@@ -70,4 +79,40 @@ func (self WorkItemsClient) Search(text string) ([]search.WorkItemResult, error)
 	}
 
 	return results, nil
+}
+
+func (self WorkItemsClient) Create(args CreateWorkItemArgs) (*workitemtracking.WorkItem, error) {
+	titlePath := "/fields/System.Title"
+	descPath := "/fields/System.Description"
+	statePath := "/fields/System.State"
+	tagsPath := "/fields/System.Tags"
+	validateOnly := false
+
+	return self.workItems.CreateWorkItem(context.Background(), workitemtracking.CreateWorkItemArgs{
+		Project:      &self.project,
+		Type:         &args.Type,
+		ValidateOnly: &validateOnly,
+		Document: &[]webapi.JsonPatchOperation{
+			{
+				Op:    &webapi.OperationValues.Add,
+				Path:  &titlePath,
+				Value: args.Title,
+			},
+			{
+				Op:    &webapi.OperationValues.Add,
+				Path:  &descPath,
+				Value: args.Description,
+			},
+			{
+				Op:    &webapi.OperationValues.Add,
+				Path:  &statePath,
+				Value: "Proposed",
+			},
+			{
+				Op:    &webapi.OperationValues.Add,
+				Path:  &tagsPath,
+				Value: strings.Join(args.Tags, "; "),
+			},
+		},
+	})
 }

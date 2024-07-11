@@ -17,5 +17,21 @@ func New(client *ado.Client) cli.Command {
 						Required(),
 				}).
 				WithHandler(search(client)),
+		).
+		WithCommand(
+			cli.NewCommand("sync-github").
+				WithDescription("sync work items with github issues").
+				WithParams(cli.Params{
+					"project": cli.String().
+						Description("project id/name").
+						Required(),
+					"gh-org": cli.String().
+						Description("github organization name").
+						Required(),
+					"gh-repo": cli.String().
+						Description("github repository name").
+						Required(),
+				}).
+				WithHandler(syncGithub(client)),
 		)
 }
